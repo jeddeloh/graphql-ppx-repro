@@ -1,0 +1,30 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+type query_root {
+  test: Int!
+}
+
+type subscription_root {
+  test: Int!
+}
+
+input this_will_be_duplicated {
+  id: String!
+}
+
+input nested_type {
+  the_problem: this_will_be_duplicated
+}
+
+input problem_input {
+  the_problem: this_will_be_duplicated
+  b: nested_type
+}
+
+type mutation_root {
+  failingMutation(input: problem_input!): Boolean!
+}
